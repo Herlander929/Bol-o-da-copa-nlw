@@ -19,24 +19,13 @@ model Pool {
   title String
   code String @unique
   createdAt DateTime @default(now())
-  userId String?
-
-  owner User? @relation(fields: [userId], references: [id])
-
-  participant Participant[]
 }
 
 model Participant {
     id String @id @default(cuid())
-    userId String
-    poolId String
-
-    user User @relation(fields: [userId], references: [id])
-    pool Pool @relation(fields: [poolId], references: [id])
+    user User
 
     guesses Guess[]
-
-    @@unique([userId, poolId])
 }
 
 model User {
@@ -46,8 +35,7 @@ model User {
     avatarURL String?
     createdAt DateTime @default(now())
 
-    participantingAt Participant[]
-    ownPools Pool[]
+    participant Participant[]
 
 
 
