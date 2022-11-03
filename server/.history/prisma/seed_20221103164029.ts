@@ -1,0 +1,66 @@
+
+
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient()
+
+
+async function main() {
+const user = await prisma.user.create({
+    data: {
+        name : 'Herl San',
+        email: 'herl.san@gmail.com',
+        avatarURL: 'https://github.com/Herlander929.png'
+       
+
+    }
+})
+    const pool = await prisma.pool.create({
+        data: {
+            title: 'Example Pool',
+            code: 'BOL123',
+            userId: user.id,
+            participant: {
+                create: {
+                    userId: user.id
+
+            }}
+           
+
+        }
+    })
+
+     await prisma.game.create({
+        data: {
+            date: '2022-11-02T12:00:00.263Z',
+            firstTeamCountryCode: 'DE',
+            secondTeamCountryCode: 'BR',
+        }
+     })
+
+     await prisma.game.create({
+        data: {
+            date: '2022-11-03T12:00:00.263Z',
+            firstTeamCountryCode: 'BR',
+            secondTeamCountryCode: 'AR',
+
+            gesses: {
+                create: {
+                    firstTeamPoints: 2,
+                    secondTeamPoints: 1,
+
+                    participant: {
+                        connect: {
+                            userId_poolId: {
+                                userId: user.id,
+                                poolId: pool.id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+     })
+
+}
+main()
