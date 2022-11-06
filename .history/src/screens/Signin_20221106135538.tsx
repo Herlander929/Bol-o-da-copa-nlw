@@ -15,11 +15,10 @@ export function SignIn(){
        title=" Entrar com Google"
        leftIcon={<Icon as ={Fontisto} name="google" color="white" size="md"/>}
        type='SECUNDARY'
-       mt={12}
        
        />
 
-       <Text color = "white" textAlign="center" mt={4}>
+       <Text color = "white" textAlign="center">
         Não utilizamos nenhuma informação além {'\n'}do seu e-mail para criação da sua conta
        </Text>
       </Center>
